@@ -32,7 +32,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable) // Désactive la protection CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         // Routes publiques (pas besoin d'authentification)
-                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/api/get/image/*").permitAll()
+                        .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated() // Toutes les autres routes nécessitent une authentification
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Gestion de session sans état (pas de session)

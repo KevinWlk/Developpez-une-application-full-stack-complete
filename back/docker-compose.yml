@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-
   database:
     image: mysql:8.0
     container_name: mdd-db
@@ -16,6 +15,7 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - mdd-network
+    restart: unless-stopped
 
   mdd-app:
     image: maven:3.8.7-eclipse-temurin-17
@@ -35,6 +35,7 @@ services:
       - .:/usr/src/app
     working_dir: /usr/src/app
     command: mvn spring-boot:run
+    restart: unless-stopped
 
 volumes:
   db_data:

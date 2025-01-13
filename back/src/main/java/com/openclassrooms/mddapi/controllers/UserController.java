@@ -1,32 +1,24 @@
 package com.openclassrooms.mddapi.controllers;
 
-import com.openclassrooms.mddapi.models.User;
+import com.openclassrooms.mddapi.dtos.UserResponse;
+import com.openclassrooms.mddapi.exceptions.NotFoundException;
 import com.openclassrooms.mddapi.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.constraints.Min;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/users")
+@Validated
+@RequestMapping("/api")
 public class UserController {
     private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
-        return ResponseEntity.ok(createdUser);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+    @GetMapping("/user/{id}")
+    public UserResponse getUser(@PathVariable @Min(value = 1, message = "L'identifiant doit être égal ou supérieur à un (1).") int id) throws NotFoundException {
+        return userService.getUser(id);
     }
 }
