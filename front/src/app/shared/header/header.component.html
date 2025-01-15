@@ -3,6 +3,8 @@
     <h1 class="text-xl font-bold">Monde de Dév</h1>
     <nav>
       <a routerLink="/" class="mr-4 hover:underline">Accueil</a>
+
+      <a *ngIf="isAuthenticated()" routerLink="/themes" class="mr-4 hover:underline">Thèmes</a>
       <a *ngIf="!isAuthenticated()" routerLink="/login" class="mr-4 hover:underline">Connexion</a>
       <a *ngIf="!isAuthenticated()" routerLink="/register" class="hover:underline">Inscription</a>
       <button *ngIf="isAuthenticated()" (click)="logout()" class="hover:underline">Déconnexion</button>

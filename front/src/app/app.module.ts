@@ -16,10 +16,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 
 // Composants principaux
-import { HeaderComponent } from './pages/header/header.component';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ThemesComponent } from './components/themes/themes.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { PostListComponent } from './post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,11 @@ import { RegisterComponent } from './pages/register/register.component';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfileComponent,
+    ThemesComponent,
+    NotFoundComponent,
+    PostListComponent
   ],
   imports: [
     BrowserModule,
