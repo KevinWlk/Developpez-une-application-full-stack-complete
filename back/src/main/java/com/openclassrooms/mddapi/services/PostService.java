@@ -22,6 +22,20 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    public Post updatePost(Integer id, Post postDetails) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post non trouvé avec l'ID : " + id));
+        post.setTitle(postDetails.getTitle());
+        post.setContent(postDetails.getContent());
+        return postRepository.save(post);
+    }
+
+    public void deletePost(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post non trouvé avec l'ID : " + id));
+        postRepository.delete(post);
+    }
+
     public List<Post> getPostsBySubjectId(Integer subjectId) {
         return postRepository.findBySubjectId(subjectId);
     }

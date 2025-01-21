@@ -11,4 +11,5 @@ public class SubscriptionDTO {
     private Integer id;
     private Integer userId;
     private Integer subjectId;
+    private String subjectName;
 }

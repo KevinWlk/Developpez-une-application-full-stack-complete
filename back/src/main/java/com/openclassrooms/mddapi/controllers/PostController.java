@@ -34,9 +34,23 @@ public class PostController {
         return ResponseEntity.ok(postMapper.toDTO(createdPost));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable Integer id, @RequestBody PostDTO postDTO) {
+        Post post = postMapper.toEntity(postDTO);
+        Post updatedPost = postService.updatePost(id, post);
+        return ResponseEntity.ok(postMapper.toDTO(updatedPost));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
+        postService.deletePost(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/subject/{subjectId}")
     public ResponseEntity<List<PostDTO>> getPostsBySubjectId(@PathVariable Integer subjectId) {
         List<Post> posts = postService.getPostsBySubjectId(subjectId);
         return ResponseEntity.ok(posts.stream().map(postMapper::toDTO).collect(Collectors.toList()));
     }
 }
+

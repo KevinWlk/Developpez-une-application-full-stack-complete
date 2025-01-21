@@ -1,12 +1,26 @@
 <div class="container mx-auto py-6">
-  <h2 class="text-2xl font-bold text-gray-800 mb-4">Posts</h2>
-  <ul>
-    <li *ngFor="let post of posts" class="mb-4">
-      <div class="border p-4 rounded shadow">
-        <h3 class="text-xl font-bold">{{ post.title }}</h3>
-        <p>{{ post.content }}</p>
-        <small class="text-gray-500">Publié le {{ post.createdAt }}</small>
-      </div>
-    </li>
-  </ul>
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Articles</h2>
+
+  <button class="bg-green-500 text-white px-4 py-2 mb-4" (click)="openCreateDialog()">
+    Ajouter un article
+  </button>
+
+  <div *ngIf="isLoading" class="text-center">
+    <p>Chargement des articles...</p>
+  </div>
+
+  <div *ngIf="!isLoading && articles.length > 0">
+    <div *ngFor="let article of articles" class="mb-4 border-b pb-4">
+      <h3 class="text-xl font-bold">{{ article.title }}</h3>
+      <p class="text-gray-700">{{ article.content }}</p>
+      <p class="text-sm text-gray-500">Sujet : {{ article.subjectName }}</p>
+
+      <button class="bg-blue-500 text-white px-4 py-2 mr-2" (click)="openEditDialog(article)">Modifier</button>
+      <button class="bg-red-500 text-white px-4 py-2" (click)="deleteArticle(article.id)">Supprimer</button>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && articles.length === 0" class="text-center">
+    <p>Aucun article disponible pour le moment.</p>
+  </div>
 </div>

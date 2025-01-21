@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import {ProfileComponent} from "./components/profile/profile.component";
 import {AuthGuard} from "./shared/guards/auth.guard";
 import {SubjectListComponent} from "./components/subject-list/subject-list.component";
+import {PostListComponent} from "./post-list/post-list.component";
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'themes', component: SubjectListComponent, canActivate: [AuthGuard] },
+  { path: 'subjects', component: SubjectListComponent, canActivate: [AuthGuard] },
+  { path: 'posts', component: PostListComponent, canActivate: [AuthGuard] },
 ];
 
 

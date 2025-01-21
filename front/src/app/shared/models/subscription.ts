@@ -1,6 +1,9 @@
 export interface Subscription {
   id: number;
-  userId: number;
   subjectId: number;
-  createdAt: Date;
+  subject?: {
+    id: number;
+    name: string;
+  };
+  userId: number;
 }

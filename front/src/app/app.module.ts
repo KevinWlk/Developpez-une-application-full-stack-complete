@@ -26,6 +26,9 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PostListComponent } from './post-list/post-list.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { PostDialogComponent } from './components/post-dialog/post-dialog.component';
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     ProfileComponent,
     SubjectListComponent,
     NotFoundComponent,
-    PostListComponent
+    PostListComponent,
+    PostDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +57,13 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatIconModule,
     MatListModule,
     MatDialogModule,
+    MatSelectModule,
+    MatOptionModule,
+
     MatMenuModule,
     MatProgressSpinnerModule
   ],
+  entryComponents: [PostDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

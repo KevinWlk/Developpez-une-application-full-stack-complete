@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Ajouter un Article</h2>
+<mat-dialog-content>
+  <form [formGroup]="postForm">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Titre</mat-label>
+      <input matInput formControlName="title" />
+      <mat-error *ngIf="postForm.get('title')?.hasError('required')">
+        Le titre est obligatoire
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Contenu</mat-label>
+      <textarea matInput formControlName="content" rows="5"></textarea>
+      <mat-error *ngIf="postForm.get('content')?.hasError('required')">
+        Le contenu est obligatoire
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Sujet</mat-label>
+      <mat-select formControlName="subjectId">
+        <mat-option *ngFor="let subject of subscribedSubjects" [value]="subject.id">
+          {{ subject.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="postForm.get('subjectId')?.hasError('required')">
+        Sélectionnez un sujet
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Annuler</button>
+  <button mat-raised-button color="primary" [disabled]="postForm.invalid" (click)="onSubmit()">
+    Ajouter
+  </button>
+</mat-dialog-actions>
