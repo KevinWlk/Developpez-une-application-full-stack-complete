@@ -35,4 +35,10 @@ public class SubscriptionController {
         List<Subscription> subscriptions = subscriptionService.getSubscriptionsByUserId(userId);
         return ResponseEntity.ok(subscriptions.stream().map(subscriptionMapper::toDTO).collect(Collectors.toList()));
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSubscription(@PathVariable Integer id) {
+        subscriptionService.deleteSubscription(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

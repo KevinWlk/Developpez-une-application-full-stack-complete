@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.controllers;
 
+import com.openclassrooms.mddapi.dtos.UserRequest;
 import com.openclassrooms.mddapi.dtos.UserResponse;
 import com.openclassrooms.mddapi.exceptions.NotFoundException;
 import com.openclassrooms.mddapi.services.UserService;
@@ -21,4 +22,11 @@ public class UserController {
     public UserResponse getUser(@PathVariable @Min(value = 1, message = "L'identifiant doit être égal ou supérieur à un (1).") int id) throws NotFoundException {
         return userService.getUser(id);
     }
+    @PutMapping("/user/{id}")
+    public UserResponse updateUser(
+            @PathVariable @Min(value = 1, message = "L'identifiant doit être égal ou supérieur à un (1).") int id,
+            @RequestBody UserRequest userRequest) throws NotFoundException {
+        return userService.updateUser(id, userRequest);
+    }
+
 }

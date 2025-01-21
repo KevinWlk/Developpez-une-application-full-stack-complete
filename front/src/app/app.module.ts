@@ -21,9 +21,11 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ThemesComponent } from './components/themes/themes.component';
+import { SubjectListComponent } from './components/subject-list/subject-list.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PostListComponent } from './post-list/post-list.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -33,7 +35,7 @@ import { PostListComponent } from './post-list/post-list.component';
     RegisterComponent,
     HeaderComponent,
     ProfileComponent,
-    ThemesComponent,
+    SubjectListComponent,
     NotFoundComponent,
     PostListComponent
   ],
@@ -50,7 +52,9 @@ import { PostListComponent } from './post-list/post-list.component';
     MatCardModule,
     MatIconModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

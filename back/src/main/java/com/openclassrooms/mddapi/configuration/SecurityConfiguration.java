@@ -15,6 +15,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -28,30 +30,30 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Configuration de la sécurité des requêtes HTTP
         http.csrf(AbstractHttpConfigurer::disable) // Désactive la protection CSRF
                 .authorizeHttpRequests(authorize -> authorize
                         // Routes publiques (pas besoin d'authentification)
                         .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated() // Toutes les autres routes nécessitent une authentification
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Gestion de session sans état (pas de session)
-                .authenticationProvider(authenticationProvider) // Définir le fournisseur d'authentification
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Ajouter le filtre JWT avant les filtres d'authentification de Spring
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Gestion de session sans état
+                .authenticationProvider(authenticationProvider) // Fournisseur d'authentification
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Filtre JWT
+                .cors(withDefaults()); // Active la configuration CORS
 
-        return http.build();
+        return http.build(); // Unique appel à build()
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Autorise les requêtes depuis l'origine localhost:4200
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT")); // Méthodes HTTP autorisées
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Origine Angular
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Méthodes autorisées
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // En-têtes autorisés
+        configuration.setAllowCredentials(true); // Autorise l'envoi des cookies ou tokens
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Applique la configuration CORS à toutes les routes
+        source.registerCorsConfiguration("/**", configuration); // Applique la configuration à toutes les routes
         return source;
     }
 }

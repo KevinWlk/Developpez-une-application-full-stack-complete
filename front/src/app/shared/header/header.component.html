@@ -1,13 +1,27 @@
 <header class="bg-blue-600 text-white py-4">
   <div class="container mx-auto flex justify-between items-center">
     <h1 class="text-xl font-bold">Monde de Dév</h1>
-    <nav>
-      <a routerLink="/" class="mr-4 hover:underline">Accueil</a>
-
-      <a *ngIf="isAuthenticated()" routerLink="/themes" class="mr-4 hover:underline">Thèmes</a>
-      <a *ngIf="!isAuthenticated()" routerLink="/login" class="mr-4 hover:underline">Connexion</a>
-      <a *ngIf="!isAuthenticated()" routerLink="/register" class="hover:underline">Inscription</a>
-      <button *ngIf="isAuthenticated()" (click)="logout()" class="hover:underline">Déconnexion</button>
+    <nav class="flex items-center">
+      <a mat-button routerLink="/" class="mr-4 text-white">Accueil</a>
+      <a *ngIf="isAuthenticated()" mat-button routerLink="/themes" class="mr-4 text-white">Thèmes</a>
+      <a *ngIf="!isAuthenticated()" mat-button routerLink="/login" class="mr-4 text-white">Connexion</a>
+      <a *ngIf="!isAuthenticated()" mat-button routerLink="/register" class="text-white">Inscription</a>
+      <button *ngIf="isAuthenticated()" mat-button (click)="logout()" class="mr-4 text-white">
+        Déconnexion
+      </button>
+      <button *ngIf="isAuthenticated()" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>person</mat-icon>
+          <span>Mon profil</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Déconnexion</span>
+        </button>
+      </mat-menu>
     </nav>
   </div>
 </header>

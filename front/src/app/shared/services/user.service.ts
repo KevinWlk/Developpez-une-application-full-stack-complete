@@ -1,8 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { User } from '../models/User';
+import { Observable } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +12,17 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/user/${id}`).pipe(
-      catchError((error) => {
-        console.error('Erreur lors de la récupération de l’utilisateur:', error);
-        return throwError(() => new Error('Erreur de récupération des données utilisateur.'));
-      })
-    );
+    const token = localStorage.getItem('token'); // Récupérez le jeton stocké
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<User>(`${this.apiUrl}/user/${id}`, { headers });
   }
+  updateUser(id: number, user: Partial<User>): Observable<User> {
+    const token = localStorage.getItem('token'); // Si l'authentification est nécessaire
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.put<User>(`${this.apiUrl}/user/${id}`, user, { headers });
+  }
+
 }

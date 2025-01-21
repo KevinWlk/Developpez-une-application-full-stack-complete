@@ -23,4 +23,7 @@ public class SubscriptionService {
     public List<Subscription> getSubscriptionsByUserId(Integer userId) {
         return subscriptionRepository.findByUserId(userId);
     }
+    public void deleteSubscription(Integer id) {
+        subscriptionRepository.deleteById(id);
+    }
 }

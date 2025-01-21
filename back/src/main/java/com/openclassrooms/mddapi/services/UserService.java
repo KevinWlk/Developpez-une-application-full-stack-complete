@@ -62,4 +62,23 @@ public class UserService implements UserInterface {
 
         UserMapper.INSTANCE.userToUserResponse(user); // Retourne l'utilisateur enregistré sous forme de UserResponse
     }
+    @Override
+    public UserResponse updateUser(Integer id, UserRequest userRequest) throws NotFoundException {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé."));
+
+        if (userRequest.getName() != null) {
+            user.setName(userRequest.getName());
+        }
+
+        if (userRequest.getEmail() != null) {
+            user.setEmail(userRequest.getEmail());
+        }
+
+        user.setUpdatedAt(java.time.LocalDate.now());
+        userRepository.save(user);
+
+        return UserMapper.INSTANCE.userToUserResponse(user);
+    }
+
 }

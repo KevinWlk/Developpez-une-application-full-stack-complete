@@ -13,4 +13,10 @@ public interface UserInterface {
 
     // Register
     void createUser(UserRequest userRequest) throws AlreadyExistException;
+
+    //update
+    UserResponse updateUser(Integer id, UserRequest userRequest) throws NotFoundException;
+
+
+
 }

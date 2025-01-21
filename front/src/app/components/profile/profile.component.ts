@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../shared/models/User';
+import { User } from '../../shared/models/user';
 import { UserService } from '../../shared/services/user.service';
 
 @Component({
@@ -10,11 +10,12 @@ import { UserService } from '../../shared/services/user.service';
 export class ProfileComponent implements OnInit {
   user: User | null = null;
   error: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    const userId = this.getLoggedInUserId(); // Remplacez cette méthode par une récupération réelle de l'ID utilisateur
+    const userId = this.getLoggedInUserId();
     this.userService.getUser(userId).subscribe({
       next: (data) => {
         this.user = data;
@@ -26,9 +27,23 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  saveChanges() {
+    if (this.user) {
+      this.userService.updateUser(this.user.id, { name: this.user.name, email: this.user.email }).subscribe({
+        next: (updatedUser) => {
+          this.successMessage = 'Profil mis à jour avec succès.';
+          this.user = updatedUser;
+        },
+        error: (err) => {
+          this.error = "Erreur lors de la mise à jour du profil.";
+          console.error(err);
+        },
+      });
+    }
+  }
+
   private getLoggedInUserId(): number {
-    // Exemple : récupérer l'ID utilisateur depuis le localStorage ou un service d'authentification
     const userId = localStorage.getItem('userId');
-    return userId ? parseInt(userId, 10) : 0; // Valeur par défaut si l'utilisateur n'est pas connecté
+    return userId ? parseInt(userId, 10) : 0;
   }
 }

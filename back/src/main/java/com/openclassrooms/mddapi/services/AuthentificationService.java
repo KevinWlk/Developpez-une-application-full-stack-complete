@@ -32,7 +32,7 @@ public class AuthentificationService implements AuthentificationInterface {
             User user = userInDB.get();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getEmail(), userRequest.getPassword()));
             String jwtToken = jwtService.generateToken(user);
-            return new LoginResponse(jwtToken, jwtService.getExpirationTime());
+            return new LoginResponse(jwtToken, jwtService.getExpirationTime(), user.getId()); // Ajoutez user.getId()
         } else {
             throw new NotFoundException("Utilisateur non référencé.");
         }
