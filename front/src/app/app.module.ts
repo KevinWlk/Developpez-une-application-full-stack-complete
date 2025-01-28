@@ -23,12 +23,14 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { ProfileComponent } from './components/profile/profile.component';
 import { SubjectListComponent } from './components/subject-list/subject-list.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { PostListComponent } from './post-list/post-list.component';
+import { PostListComponent } from './components/post-list/post-list.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { PostDialogComponent } from './components/post-dialog/post-dialog.component';
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import { PostDetailComponent } from './components/post-detail/post-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import {MatSelectModule} from "@angular/material/select";
     SubjectListComponent,
     NotFoundComponent,
     PostListComponent,
-    PostDialogComponent
+    PostDialogComponent,
+    PostDetailComponent
   ],
   imports: [
     BrowserModule,

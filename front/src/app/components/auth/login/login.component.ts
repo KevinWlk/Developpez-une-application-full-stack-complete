@@ -10,8 +10,6 @@ import { AuthService, LoginResponse } from '../../../shared/services/auth.servic
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  errorMessage: string | null = null; // Propriété pour afficher les erreurs
-  isLoading: boolean = false; // Propriété pour gérer l'état de chargement
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -22,21 +20,20 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.isLoading = true;
-      this.errorMessage = null;
       this.authService.login(this.loginForm.value).subscribe(
         (response: LoginResponse) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('userId', response.userId.toString());
-          this.isLoading = false;
-          this.router.navigate(['/themes']);
+          this.router.navigate(['/subjects']);
         },
         (error) => {
-          this.isLoading = false;
-          this.errorMessage = 'Connexion échouée. Veuillez vérifier vos identifiants.';
+          console.error('Erreur de connexion', error);
         }
       );
     }
   }
-}
 
+  goBack() {
+    this.router.navigate(['/']);
+  }
+}

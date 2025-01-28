@@ -1,28 +1,24 @@
-<header class="bg-blue-600 text-white py-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-xl font-bold">Monde de Dév</h1>
-    <nav class="flex items-center">
-      <a mat-button routerLink="/" class="mr-4 text-white">Accueil</a>
-      <a *ngIf="isAuthenticated()" mat-button routerLink="/subjects" class="mr-4 text-white">Thèmes</a>
-      <a *ngIf="isAuthenticated()" routerLink="/posts" class="mr-4 hover:underline">Articles</a>
-      <a *ngIf="!isAuthenticated()" mat-button routerLink="/login" class="mr-4 text-white">Connexion</a>
-      <a *ngIf="!isAuthenticated()" mat-button routerLink="/register" class="text-white">Inscription</a>
-      <button *ngIf="isAuthenticated()" mat-button (click)="logout()" class="mr-4 text-white">
-        Déconnexion
-      </button>
-      <button *ngIf="isAuthenticated()" mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/profile">
-          <mat-icon>person</mat-icon>
-          <span>Mon profil</span>
+<header class="w-full py-4 border-b border-gray-200 flex justify-center">
+  <div class="container flex items-center justify-between px-4">
+    <!-- Logo -->
+    <img src="assets/logo_p6.png" alt="MDD Logo" class="w-24" />
+
+    <!-- Menu affiché SEULEMENT SI connecté -->
+    <nav *ngIf="isAuthenticated()" class="ml-auto flex items-center space-x-4">
+      <a mat-button routerLink="/subjects">Thèmes</a>
+      <a mat-button routerLink="/posts">Articles</a>
+
+      <!-- Icône de profil avec menu déroulant -->
+      <div class="relative">
+        <button mat-icon-button (click)="toggleMenu()">
+          <img src="assets/user-icon.png" alt="Profil" class="w-10 h-10 rounded-full border" />
         </button>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>logout</mat-icon>
-          <span>Déconnexion</span>
-        </button>
-      </mat-menu>
+
+        <div *ngIf="menuOpen" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg z-10">
+          <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">Mon profil</a>
+          <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-gray-100">Déconnexion</button>
+        </div>
+      </div>
     </nav>
   </div>
 </header>

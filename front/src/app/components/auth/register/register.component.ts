@@ -23,13 +23,16 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe(
         () => {
-          console.log('Registration successful');
           this.router.navigate(['/login']);
         },
         (error) => {
-          console.error('Registration failed', error);
+          console.error('Erreur lors de l’inscription', error);
         }
       );
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/']);
   }
 }

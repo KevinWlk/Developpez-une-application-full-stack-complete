@@ -1,5 +1,14 @@
-<div class="center">
-  <img src="/front/src/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+<div class="flex flex-col items-center justify-center min-h-screen w-full px-4">
+  <!-- Logo -->
+  <img src="assets/logo_p6.png" alt="MDD Logo" class="w-32 md:w-48 lg:w-56 mb-8" />
+
+  <!-- Boutons côte à côte -->
+  <div class="flex space-x-4">
+    <a routerLink="/login" class="px-6 py-2 border border-gray-900 text-gray-900 bg-white rounded-lg hover:bg-gray-200">
+      Se connecter
+    </a>
+    <a routerLink="/register" class="px-6 py-2 border border-gray-900 text-gray-900 bg-white rounded-lg hover:bg-gray-200">
+      S'inscrire
+    </a>
+  </div>
 </div>

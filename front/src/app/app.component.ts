@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from './shared/header/header.component';
-
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +8,14 @@ import { HeaderComponent } from './shared/header/header.component';
 })
 export class AppComponent {
   title = 'front';
+  showHeader: boolean = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Le header ne doit PAS s'afficher sur la page d'accueil
+        this.showHeader = !(event.url === '/');
+      }
+    });
+  }
 }

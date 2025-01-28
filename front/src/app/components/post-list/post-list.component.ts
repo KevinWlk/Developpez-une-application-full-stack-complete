@@ -1,0 +1,106 @@
+import { Component, OnInit } from '@angular/core';
+import { Post } from '../../shared/models/post';
+import { Subject } from '../../shared/models/subject';
+import { PostService } from '../../shared/services/post.service';
+import { SubscriptionService } from '../../shared/services/subscription.service';
+import { SubjectService } from '../../shared/services/subject.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PostDialogComponent } from '../post-dialog/post-dialog.component';
+
+@Component({
+  selector: 'app-article-list',
+  templateUrl: './post-list.component.html',
+  styleUrls: [],
+})
+export class PostListComponent implements OnInit {
+  articles: Post[] = [];
+  isLoading: boolean = true;
+  subscribedSubjects: Subject[] = [];
+  sortOrder: 'asc' | 'desc' = 'desc'; // Tri par défaut
+
+  constructor(
+    private postService: PostService,
+    private subscriptionService: SubscriptionService,
+    private dialog: MatDialog,
+    private subjectService: SubjectService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadSubscribedSubjects();
+  }
+
+  private loadSubscribedSubjects(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.subscriptionService.getSubscriptionsByUserId(+userId).subscribe((subs) => {
+        this.subjectService.getAllSubjects().subscribe((allSubjects) => {
+          this.subscribedSubjects = subs
+            .map((sub) => {
+              const subject = allSubjects.find((s) => s.id === sub.subjectId);
+              return subject || null;
+            })
+            .filter((subject): subject is Subject => !!subject);
+
+          this.loadArticles();
+        });
+      });
+    }
+  }
+
+  private loadArticles(): void {
+    this.isLoading = true;
+
+    this.articles = []; // Réinitialiser les articles
+    const requests = this.subscribedSubjects.map((subject) =>
+      this.postService.getPostsBySubjectId(subject.id)
+    );
+
+    // Exécuter toutes les requêtes en parallèle
+    Promise.all(requests.map((req) => req.toPromise()))
+      .then((results) => {
+        results.forEach((posts) => {
+          if (posts) { // Vérifie si posts n'est pas undefined
+            this.articles.push(...posts); // Ajouter les articles récupérés
+          }
+        });
+        this.sortArticles(); // Trier les articles
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        console.error("Erreur lors du chargement des articles :", error);
+        this.isLoading = false;
+      });
+  }
+
+
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(PostDialogComponent, {
+      width: '500px',
+      data: { subjects: this.subscribedSubjects },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.postService.createPost(result).subscribe((newPost) => {
+          this.articles.push(newPost);
+          this.sortArticles();
+        });
+      }
+    });
+  }
+
+  toggleSortOrder(): void {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortArticles();
+  }
+
+  private sortArticles(): void {
+    this.articles.sort((a, b) => {
+      if (this.sortOrder === 'asc') {
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      } else {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }
+    });
+  }
+}

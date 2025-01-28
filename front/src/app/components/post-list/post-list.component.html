@@ -1,0 +1,27 @@
+<div class="container mx-auto py-6 px-4">
+  <div class="flex justify-between items-center mb-6">
+    <button class="bg-purple-600 text-white px-4 py-2 rounded-lg" (click)="openCreateDialog()">
+      Créer un article
+    </button>
+
+    <button class="flex items-center text-gray-700" (click)="toggleSortOrder()">
+      Trier par
+      <mat-icon>{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let article of articles" class="bg-white shadow-md rounded-lg p-4">
+      <h3 class="text-lg font-bold">{{ article.title }}</h3>
+      <p class="text-sm text-gray-500">Date • Auteur</p>
+      <p class="text-gray-700 mt-2">{{ article.content }}</p>
+      <button class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg w-full">
+        Voir plus
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && articles.length === 0" class="text-center text-gray-500 mt-4">
+    Aucun article disponible pour le moment.
+  </div>
+</div>

@@ -16,15 +16,15 @@ export class PostDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PostDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { subjects: Subject[] },
     private fb: FormBuilder
-  ) {
-    this.subscribedSubjects = data.subjects;
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.subscribedSubjects = this.data.subjects || [];
+
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-      subjectId: ['', Validators.required],
+      subjectId: [null, Validators.required],
     });
   }
 
@@ -34,7 +34,7 @@ export class PostDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.postForm.valid) {
-      this.dialogRef.close(this.postForm.value); // Retourne les données du formulaire
+      this.dialogRef.close(this.postForm.value);
     }
   }
 }

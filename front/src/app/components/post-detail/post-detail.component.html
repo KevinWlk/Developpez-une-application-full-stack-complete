@@ -1,0 +1,16 @@
+<h2>{{ post.title }}</h2>
+<p><strong>Date:</strong> {{ post.createdAt | date:'short' }}</p>
+<p><strong>Thème:</strong> {{ post.subjectName }}</p>
+<p><strong>Contenu:</strong> {{ post.content }}</p>
+
+<h3>Commentaires</h3>
+<div *ngFor="let comment of comments">
+  <p>{{ comment.content }}</p>
+  <small>Posté le {{ comment.createdAt | date:'short' }}</small>
+
+  <button *ngIf="comment.userId === userId" (click)="updateComment(comment)">Modifier</button>
+  <button *ngIf="comment.userId === userId" (click)="deleteComment(comment.id)">Supprimer</button>
+</div>
+
+<input [(ngModel)]="newComment" placeholder="Écrivez ici votre commentaire">
+<button (click)="addComment()">Envoyer</button>

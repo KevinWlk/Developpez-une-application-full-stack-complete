@@ -1,30 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../shared/models/user';
 import { UserService } from '../../shared/services/user.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  styleUrls: [],
 })
 export class ProfileComponent implements OnInit {
   user: User | null = null;
   error: string | null = null;
   successMessage: string | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthService) {}
 
   ngOnInit() {
-    const userId = this.getLoggedInUserId();
-    this.userService.getUser(userId).subscribe({
-      next: (data) => {
-        this.user = data;
-      },
-      error: (err) => {
-        this.error = "Impossible de charger les informations de l'utilisateur.";
-        console.error(err);
-      },
-    });
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.userService.getUser(userId).subscribe({
+        next: (data) => {
+          this.user = data;
+        },
+        error: (err) => {
+          this.error = "Impossible de charger les informations de l'utilisateur.";
+          console.error(err);
+        },
+      });
+    } else {
+      this.error = "Utilisateur non trouvé.";
+    }
   }
 
   saveChanges() {
@@ -40,10 +45,5 @@ export class ProfileComponent implements OnInit {
         },
       });
     }
-  }
-
-  private getLoggedInUserId(): number {
-    const userId = localStorage.getItem('userId');
-    return userId ? parseInt(userId, 10) : 0;
   }
 }
