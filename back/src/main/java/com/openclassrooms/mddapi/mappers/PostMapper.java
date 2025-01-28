@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface PostMapper {
 
     @Mapping(source = "subject.id", target = "subjectId")
-    @Mapping(source = "subject.name", target = "subjectName") // Mappe le nom du sujet
+    @Mapping(source = "subject.name", target = "subjectName")
     @Mapping(source = "user.id", target = "userId")
     PostDTO toDTO(Post post);
 

@@ -1,10 +1,7 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.models.Comment;
-import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.repositories.CommentRepository;
-import com.openclassrooms.mddapi.repositories.PostRepository;
-import com.openclassrooms.mddapi.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,29 +12,32 @@ import java.util.List;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
-    private final UserRepository userRepository;
     private final Logger logger = LoggerFactory.getLogger(CommentService.class);
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
+    public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
-        this.postRepository = postRepository;
-        this.userRepository = userRepository;
     }
 
     public Comment createComment(Comment comment) {
-        logger.info("Attempting to save comment: {}", comment);
-        // Vérifier que le post et l'utilisateur existent
-        comment.setPost(postRepository.findById(Math.toIntExact(comment.getPost().getId()))
-                .orElseThrow(() -> new IllegalArgumentException("Post not found with id: " + comment.getPost().getId())));
-        comment.setUser(userRepository.findById(Math.toIntExact(comment.getUser().getId()))
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + comment.getUser().getId())));
+        return commentRepository.save(comment);
+    }
 
-        // Enregistrer le commentaire
-        Comment savedComment = commentRepository.save(comment);
-        logger.info("Comment saved successfully: {}", savedComment);
-        return savedComment;
+    public List<Comment> getCommentsByPostId(Integer postId) {
+        return commentRepository.findByPostId(postId);
+    }
+
+    public Comment updateComment(Long id, String newContent) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Comment not found with id: " + id));
+        comment.setContent(newContent);
+        return commentRepository.save(comment);
+    }
+
+    public void deleteComment(Long id) {
+        if (!commentRepository.existsById(id)) {
+            throw new IllegalArgumentException("Comment not found with id: " + id);
+        }
+        commentRepository.deleteById(id);
     }
 }
-

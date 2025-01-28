@@ -1,13 +1,9 @@
 package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dtos.PostDTO;
-import com.openclassrooms.mddapi.dtos.SubscriptionDTO;
 import com.openclassrooms.mddapi.mappers.PostMapper;
-import com.openclassrooms.mddapi.mappers.SubscriptionMapper;
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.models.Subscription;
 import com.openclassrooms.mddapi.services.PostService;
-import com.openclassrooms.mddapi.services.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,4 +49,3 @@ public class PostController {
         return ResponseEntity.ok(posts.stream().map(postMapper::toDTO).collect(Collectors.toList()));
     }
 }
-

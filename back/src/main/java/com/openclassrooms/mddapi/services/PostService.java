@@ -1,9 +1,11 @@
 package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.models.Subscription;
+import com.openclassrooms.mddapi.models.Subject;
+import com.openclassrooms.mddapi.models.User;
 import com.openclassrooms.mddapi.repositories.PostRepository;
-import com.openclassrooms.mddapi.repositories.SubscriptionRepository;
+import com.openclassrooms.mddapi.repositories.SubjectRepository;
+import com.openclassrooms.mddapi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
