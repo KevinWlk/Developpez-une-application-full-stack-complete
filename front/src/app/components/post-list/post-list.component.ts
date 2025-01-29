@@ -6,7 +6,7 @@ import { Subject } from '../../shared/models/subject';
 import { PostService } from '../../shared/services/post.service';
 import { SubscriptionService } from '../../shared/services/subscription.service';
 import { SubjectService } from '../../shared/services/subject.service';
-import { PostDialogComponent } from '../post-dialog/post-dialog.component';
+import { PostCreateComponent } from '../post-create/post-create.component';
 
 @Component({
   selector: 'app-article-list',
@@ -72,7 +72,7 @@ export class PostListComponent implements OnInit {
   }
 
   openCreateDialog(): void {
-    const dialogRef = this.dialog.open(PostDialogComponent, {
+    const dialogRef = this.dialog.open(PostCreateComponent, {
       width: '500px',
       data: { subjects: this.subscribedSubjects },
     });

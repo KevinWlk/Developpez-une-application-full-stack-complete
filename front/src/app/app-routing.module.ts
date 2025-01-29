@@ -8,6 +8,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { SubjectListComponent } from './components/subject-list/subject-list.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
+import { PostCreateComponent } from './components/post-create/post-create.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'subjects', component: SubjectListComponent, canActivate: [AuthGuard] },
   { path: 'posts', component: PostListComponent, canActivate: [AuthGuard] },
-  { path: 'post/:id', component: PostDetailComponent, canActivate: [AuthGuard] }, // 🔒 Ajout de l'AuthGuard pour sécuriser
+  { path: 'post/:id', component: PostDetailComponent, canActivate: [AuthGuard] },
+  { path: 'article/create', component: PostCreateComponent, canActivate: [AuthGuard] }, // 🔥 Ajout de la route sécurisée
+// 🔒 Ajout de l'AuthGuard pour sécuriser
 
   // Redirection vers la home en cas de route inconnue
   { path: '**', redirectTo: '', pathMatch: 'full' }

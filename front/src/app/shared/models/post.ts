@@ -1,3 +1,5 @@
+import {User} from "./user";
+
 export interface Post {
   id: number;
   subjectId: number;
@@ -6,4 +8,5 @@ export interface Post {
   content: string;
   createdAt: Date;
   updatedAt: Date;
+  user: User;
 }

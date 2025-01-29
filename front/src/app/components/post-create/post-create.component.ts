@@ -5,15 +5,15 @@ import { Subject } from '../../shared/models/subject';
 
 @Component({
   selector: 'app-post-dialog',
-  templateUrl: './post-dialog.component.html',
+  templateUrl: './post-create.component.html',
   styleUrls: [],
 })
-export class PostDialogComponent implements OnInit {
+export class PostCreateComponent implements OnInit {
   postForm!: FormGroup;
   subscribedSubjects: Subject[] = [];
 
   constructor(
-    public dialogRef: MatDialogRef<PostDialogComponent>,
+    public dialogRef: MatDialogRef<PostCreateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { subjects: Subject[] },
     private fb: FormBuilder
   ) {}

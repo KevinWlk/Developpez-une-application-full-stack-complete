@@ -26,7 +26,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { PostDialogComponent } from './components/post-dialog/post-dialog.component';
+import { PostCreateComponent } from './components/post-create/post-create.component';
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
@@ -43,7 +43,7 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
     SubjectListComponent,
     NotFoundComponent,
     PostListComponent,
-    PostDialogComponent,
+    PostCreateComponent,
     PostDetailComponent
   ],
   imports: [
@@ -66,7 +66,7 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
     MatMenuModule,
     MatProgressSpinnerModule
   ],
-  entryComponents: [PostDialogComponent],
+  entryComponents: [PostCreateComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

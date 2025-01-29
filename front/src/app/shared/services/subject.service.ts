@@ -19,4 +19,8 @@ export class SubjectService {
 
     return this.http.get<Subject[]>(this.apiUrl, { headers });
   }
+
+  getSubscribedSubjects(): Observable<Subject[]> {
+    return this.http.get<Subject[]>(`${this.apiUrl}/subscribed`);
+  }
 }
