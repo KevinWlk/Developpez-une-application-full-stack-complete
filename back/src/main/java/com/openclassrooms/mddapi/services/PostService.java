@@ -41,4 +41,9 @@ public class PostService {
     public List<Post> getPostsBySubjectId(Integer subjectId) {
         return postRepository.findBySubjectId(subjectId);
     }
+    public Post getPostById(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("a faire" + id));
+        return post;
+    }
 }

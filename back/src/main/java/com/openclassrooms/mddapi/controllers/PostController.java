@@ -36,6 +36,11 @@ public class PostController {
         Post updatedPost = postService.updatePost(id, post);
         return ResponseEntity.ok(postMapper.toDTO(updatedPost));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO> getPost(@PathVariable Integer id) {
+        Post post = postService.getPostById(id);
+        return ResponseEntity.ok(postMapper.toDTO(post));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
@@ -48,4 +53,5 @@ public class PostController {
         List<Post> posts = postService.getPostsBySubjectId(subjectId);
         return ResponseEntity.ok(posts.stream().map(postMapper::toDTO).collect(Collectors.toList()));
     }
+
 }

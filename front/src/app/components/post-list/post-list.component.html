@@ -13,9 +13,9 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <div *ngFor="let article of articles" class="bg-white shadow-md rounded-lg p-4">
       <h3 class="text-lg font-bold">{{ article.title }}</h3>
-      <p class="text-sm text-gray-500">Date • Auteur</p>
+      <p class="text-sm text-gray-500">Publié le {{ article.createdAt | date:'short' }}</p>
       <p class="text-gray-700 mt-2">{{ article.content }}</p>
-      <button class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg w-full">
+      <button class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg w-full" (click)="viewPostDetail(article.id)">
         Voir plus
       </button>
     </div>

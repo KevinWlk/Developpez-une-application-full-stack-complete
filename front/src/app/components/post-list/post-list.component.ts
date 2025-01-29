@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { Post } from '../../shared/models/post';
 import { Subject } from '../../shared/models/subject';
 import { PostService } from '../../shared/services/post.service';
 import { SubscriptionService } from '../../shared/services/subscription.service';
 import { SubjectService } from '../../shared/services/subject.service';
-import { MatDialog } from '@angular/material/dialog';
 import { PostDialogComponent } from '../post-dialog/post-dialog.component';
 
 @Component({
@@ -16,13 +17,14 @@ export class PostListComponent implements OnInit {
   articles: Post[] = [];
   isLoading: boolean = true;
   subscribedSubjects: Subject[] = [];
-  sortOrder: 'asc' | 'desc' = 'desc'; // Tri par défaut
+  sortOrder: 'asc' | 'desc' = 'desc';
 
   constructor(
     private postService: PostService,
     private subscriptionService: SubscriptionService,
+    private subjectService: SubjectService,
     private dialog: MatDialog,
-    private subjectService: SubjectService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,10 +37,7 @@ export class PostListComponent implements OnInit {
       this.subscriptionService.getSubscriptionsByUserId(+userId).subscribe((subs) => {
         this.subjectService.getAllSubjects().subscribe((allSubjects) => {
           this.subscribedSubjects = subs
-            .map((sub) => {
-              const subject = allSubjects.find((s) => s.id === sub.subjectId);
-              return subject || null;
-            })
+            .map((sub) => allSubjects.find((s) => s.id === sub.subjectId) || null)
             .filter((subject): subject is Subject => !!subject);
 
           this.loadArticles();
@@ -49,21 +48,17 @@ export class PostListComponent implements OnInit {
 
   private loadArticles(): void {
     this.isLoading = true;
+    this.articles = [];
+    const requests = this.subscribedSubjects.map((subject) => this.postService.getPostsBySubjectId(subject.id));
 
-    this.articles = []; // Réinitialiser les articles
-    const requests = this.subscribedSubjects.map((subject) =>
-      this.postService.getPostsBySubjectId(subject.id)
-    );
-
-    // Exécuter toutes les requêtes en parallèle
     Promise.all(requests.map((req) => req.toPromise()))
       .then((results) => {
         results.forEach((posts) => {
-          if (posts) { // Vérifie si posts n'est pas undefined
-            this.articles.push(...posts); // Ajouter les articles récupérés
+          if (posts) {
+            this.articles.push(...posts);
           }
         });
-        this.sortArticles(); // Trier les articles
+        this.sortArticles();
         this.isLoading = false;
       })
       .catch((error) => {
@@ -72,6 +67,9 @@ export class PostListComponent implements OnInit {
       });
   }
 
+  viewPostDetail(postId: number): void {
+    this.router.navigate(['/post', postId]);
+  }
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(PostDialogComponent, {
@@ -96,11 +94,9 @@ export class PostListComponent implements OnInit {
 
   private sortArticles(): void {
     this.articles.sort((a, b) => {
-      if (this.sortOrder === 'asc') {
-        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      } else {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }
+      return this.sortOrder === 'asc'
+        ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   }
 }

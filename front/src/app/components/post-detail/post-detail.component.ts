@@ -40,12 +40,11 @@ export class PostDetailComponent implements OnInit {
     });
   }
 
-  // Ajouter un commentaire
   addComment(): void {
     if (!this.newComment.trim()) return;
 
     const comment: Comment = {
-      id: 0, // Géré par le backend
+      id: 0,
       postId: this.post.id,
       userId: this.userId,
       content: this.newComment,
@@ -58,7 +57,6 @@ export class PostDetailComponent implements OnInit {
     });
   }
 
-  // Modifier un commentaire
   updateComment(comment: Comment): void {
     const updatedContent = prompt('Modifier votre commentaire', comment.content);
     if (updatedContent) {
@@ -71,7 +69,6 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
-  // Supprimer un commentaire
   deleteComment(commentId: number): void {
     if (confirm('Voulez-vous vraiment supprimer ce commentaire ?')) {
       this.commentService.deleteComment(commentId).subscribe(() => {
