@@ -1,0 +1,39 @@
+<div class="container mx-auto py-6 px-4 max-w-2xl">
+  <!-- Retour -->
+  <button class="text-gray-600 mt-4" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <!-- Formulaire de création d'un article -->
+  <div class="bg-white shadow-md rounded-lg p-8 mt-6">
+    <h2 class="text-2xl font-bold text-center mb-6">Créer un nouvel article</h2>
+
+    <form [formGroup]="postForm" class="space-y-6">
+      <!-- Sélection du thème -->
+      <div class="relative flex items-center">
+        <mat-form-field appearance="outline" class="w-full text-lg">
+          <mat-select formControlName="subjectId" placeholder="Sélectionner un thème" class="h-12">
+            <mat-option *ngFor="let subject of subscribedSubjects" [value]="subject.id">
+              {{ subject.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Titre de l'article -->
+      <mat-form-field appearance="outline" class="w-full text-lg">
+        <input matInput formControlName="title" placeholder="Titre de l’article" class="h-12"/>
+      </mat-form-field>
+
+      <!-- Contenu de l'article -->
+      <mat-form-field appearance="outline" class="w-full text-lg">
+        <textarea matInput formControlName="content" rows="6" placeholder="Contenu de l’article" class=""></textarea>
+      </mat-form-field>
+
+      <!-- Bouton de soumission -->
+      <button mat-raised-button color="primary" class="w-full py-4 text-lg" [disabled]="postForm.invalid" (click)="onSubmit()">
+        Créer
+      </button>
+    </form>
+  </div>
+</div>

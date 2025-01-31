@@ -8,5 +8,6 @@ export interface Post {
   content: string;
   createdAt: Date;
   updatedAt: Date;
-  user: User;
+  user?: { id: number, name: string }
 }
+

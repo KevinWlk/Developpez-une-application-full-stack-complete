@@ -30,6 +30,7 @@ import { PostCreateComponent } from './components/post-create/post-create.compon
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
+import { PostCreatePageComponent } from './components/post-create-page/post-create-page.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
     NotFoundComponent,
     PostListComponent,
     PostCreateComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    PostCreatePageComponent
   ],
   imports: [
     BrowserModule,

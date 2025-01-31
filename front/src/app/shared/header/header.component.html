@@ -5,17 +5,22 @@
 
     <!-- Menu affiché SEULEMENT SI connecté -->
     <nav *ngIf="isAuthenticated()" class="ml-auto flex items-center space-x-4">
-      <a mat-button routerLink="/subjects">Thèmes</a>
-      <a mat-button routerLink="/posts">Articles</a>
+      <a mat-button routerLink="/subjects" routerLinkActive="text-blue-500">Thèmes</a>
+      <a mat-button routerLink="/posts" routerLinkActive="text-blue-500">Articles</a>
 
       <!-- Icône de profil avec menu déroulant -->
       <div class="relative">
-        <button mat-icon-button (click)="toggleMenu()">
-          <img src="assets/user-icon.png" alt="Profil" class="w-10 h-10 rounded-full border" />
+        <!-- Icône de profil cliquable -->
+        <button mat-icon-button (click)="toggleMenu()" class="flex items-center space-x-2">
+          <span class="material-symbols-outlined text-3xl align-middle"
+                [class.text-blue-500]="router.url === '/profile'">
+            account_circle
+          </span>
         </button>
 
+        <!-- Menu déroulant -->
         <div *ngIf="menuOpen" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg z-10">
-          <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100">Mon profil</a>
+          <a routerLink="/profile" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-100">Mon profil</a>
           <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-gray-100">Déconnexion</button>
         </div>
       </div>
