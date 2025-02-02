@@ -47,19 +47,16 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    // Returns an empty list because we don't use role-based access control.
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
-    // Returns an unique identifier about the user.
     @Override
     public String getUsername() {
         return email;
     }
 
-    // should always return true if no handled.
     @Override
     public boolean isAccountNonExpired() {
         return true;

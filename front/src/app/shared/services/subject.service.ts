@@ -12,7 +12,7 @@ export class SubjectService {
   constructor(private http: HttpClient) {}
 
   getAllSubjects(): Observable<Subject[]> {
-    const token = localStorage.getItem('token'); // Récupérez le token depuis le stockage local
+    const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });

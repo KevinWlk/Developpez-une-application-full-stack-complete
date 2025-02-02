@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
 public interface SubscriptionMapper {
 
     @Mapping(source = "subject.id", target = "subjectId")
-    @Mapping(source = "subject.name", target = "subjectName") // Mappe le nom du sujet
+    @Mapping(source = "subject.name", target = "subjectName")
     @Mapping(source = "user.id", target = "userId")
     SubscriptionDTO toDTO(Subscription subscription);
 

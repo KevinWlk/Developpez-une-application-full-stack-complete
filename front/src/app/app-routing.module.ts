@@ -8,7 +8,6 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { SubjectListComponent } from './components/subject-list/subject-list.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
-import { PostCreateComponent } from './components/post-create/post-create.component';
 import { PostCreatePageComponent } from './components/post-create-page/post-create-page.component';
 
 const routes: Routes = [

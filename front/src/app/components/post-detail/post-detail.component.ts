@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Post } from '../../shared/models/post';
 import { Comment } from '../../shared/models/comment';
 import { PostService } from '../../shared/services/post.service';
@@ -19,13 +19,17 @@ export class PostDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private postService: PostService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     const postId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadPost(postId);
     this.loadComments(postId);
+  }
+  goBack(): void {
+    this.router.navigate(['/posts']);
   }
 
   private loadPost(postId: number): void {
@@ -63,7 +67,6 @@ export class PostDetailComponent implements OnInit {
       comment.content = updatedContent;
       comment.content = updatedContent;
       this.commentService.updateComment(comment).subscribe(() => {
-        // Mettre à jour la liste des commentaires
         this.comments = this.comments.map(c => (c.id === comment.id ? { ...c, content: updatedContent } : c));
       });
     }

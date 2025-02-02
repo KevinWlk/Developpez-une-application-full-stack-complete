@@ -1,47 +1,82 @@
 <div class="container mx-auto py-6 px-4 max-w-3xl">
-  <!-- Détails de l'article -->
-  <div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-2">{{ post.title }}</h2>
-    <p class="text-gray-500 mb-4"><strong>Publié le:</strong> {{ post.createdAt | date:'short' }}</p>
-    <p class="text-gray-700"><strong>Thème:</strong> {{ post.subjectName }}</p>
-    <p class="text-gray-700"><strong>Thème:</strong> {{ post.user?.name }}</p>
-    <p class="text-gray-700 mt-4">{{ post.content }}</p>
+
+  <!-- Bouton de retour -->
+  <button class="text-gray-600 flex items-center mb-4" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    <span class="ml-2">Retour</span>
+  </button>
+
+  <div class="container mx-auto py-6 px-4 max-w-3xl">
+    <!-- Le bloc ne s'affiche que si post est non nul -->
+    <div *ngIf="post as p" class="bg-white shadow-md rounded-lg p-6">
+      <h2 class="text-2xl font-bold mb-2">{{ p.title }}</h2>
+      <div class="flex space-x-4 text-sm text-gray-500 mb-4">
+        <div><strong>Date :</strong> {{ p.createdAt | date:'short' }}</div>
+        <div><strong>Auteur :</strong> {{ p.authorName || 'Anonyme' }}</div>
+        <div><strong>Thème :</strong> {{ p.subjectName }}</div>
+      </div>
+      <p class="text-gray-700 mt-2 whitespace-pre-wrap break-words">{{ p.content }}</p>
+    </div>
+
   </div>
 
-  <!-- Section Commentaires -->
+
   <div class="mt-8">
     <h3 class="text-xl font-semibold mb-4">Commentaires</h3>
 
-    <!-- Formulaire de création d'un commentaire -->
-    <div class="bg-gray-100 p-4 rounded-lg shadow-md mb-6">
-      <textarea
-        [(ngModel)]="newComment"
-        class="w-full p-2 border rounded-lg"
-        placeholder="Écrivez votre commentaire ici..."
-      ></textarea>
-      <button
-        class="mt-2 bg-purple-600 text-white px-4 py-2 rounded-lg"
-        (click)="addComment()"
-        [disabled]="!newComment.trim()"
-      >
-        Envoyer
-      </button>
-    </div>
-
     <!-- Liste des commentaires -->
-    <div *ngFor="let comment of comments" class="bg-white shadow-md rounded-lg p-4 mb-4">
-      <p class="text-gray-700">{{ comment.content }}</p>
-      <small class="text-gray-500">Posté le {{ comment.createdAt | date:'short' }}</small>
+    <div *ngIf="comments.length > 0; else noComments">
+      <div
+        *ngFor="let comment of comments"
+        class="flex items-start mb-4"
+      >
 
-      <div class="flex space-x-2 mt-2" *ngIf="comment.userId === userId">
-        <button class="text-blue-500" (click)="updateComment(comment)">Modifier</button>
-        <button class="text-red-500" (click)="deleteComment(comment.id)">Supprimer</button>
+
+        <!-- Bulle du commentaire -->
+        <div class="bg-gray-100 px-4 py-3 rounded-lg shadow-md w-full">
+          <!-- Nom de l'utilisateur (ou "username") -->
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-medium text-gray-800">
+              {{ comment.userName || 'Utilisateur' }}
+            </span>
+            <!-- Optionnel : date du commentaire -->
+            <small class="text-gray-500">
+              {{ comment.createdAt | date:'short' }}
+            </small>
+          </div>
+
+          <!-- Contenu du commentaire -->
+          <p class="text-gray-700 break-words">{{ comment.content }}</p>
+
+          <!-- Boutons modifier/supprimer (si c'est le bon utilisateur) -->
+          <div class="flex space-x-2 mt-2" *ngIf="comment.userId === userId">
+            <button class="text-blue-500" (click)="updateComment(comment)">Modifier</button>
+            <button class="text-red-500" (click)="deleteComment(comment.id)">Supprimer</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Message si aucun commentaire -->
-    <div *ngIf="comments.length === 0" class="text-center text-gray-500 mt-4">
-      Aucun commentaire pour le moment.
-    </div>
+    <!-- Template affiché si aucun commentaire -->
+    <ng-template #noComments>
+      <p class="text-center text-gray-500">Aucun commentaire pour le moment.</p>
+    </ng-template>
+  </div>
+
+  <!-- Zone de saisie pour un nouveau commentaire -->
+  <div class="mt-6 flex items-center space-x-2">
+    <input
+      [(ngModel)]="newComment"
+      type="text"
+      placeholder="Écrivez ici votre commentaire"
+      class="flex-1 border-2 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+    />
+    <button
+      class="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700 disabled:opacity-50"
+      (click)="addComment()"
+      [disabled]="!newComment.trim()"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
   </div>
 </div>

@@ -11,9 +11,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PostDTO {
     private Integer id;
-    private Integer userId;
-    private Integer subjectId;
-    private String subjectName;
     private String title;
     private String content;
+    private LocalDateTime createdAt;
+
+    private Integer userId;
+    private String authorName;
+
+    private Integer subjectId;
+    private String subjectName;
+
 }

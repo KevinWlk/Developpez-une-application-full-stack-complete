@@ -9,13 +9,22 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class HeaderComponent {
   menuOpen = false;
+  burgerMenuOpen = false;
+  isMobile = false;
 
   constructor(private authService: AuthService, public router: Router, private eRef: ElementRef) {
+    this.checkScreenSize();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.closeMenu();
+        this.burgerMenuOpen = false;
       }
     });
+  }
+
+  @HostListener('window:resize', [])
+  checkScreenSize() {
+    this.isMobile = window.innerWidth <= 768;
   }
 
   isAuthenticated(): boolean {
@@ -26,8 +35,13 @@ export class HeaderComponent {
     this.menuOpen = !this.menuOpen;
   }
 
+  toggleBurgerMenu() {
+    this.burgerMenuOpen = !this.burgerMenuOpen;
+  }
+
   closeMenu() {
     this.menuOpen = false;
+    this.burgerMenuOpen = false;
   }
 
   logout() {

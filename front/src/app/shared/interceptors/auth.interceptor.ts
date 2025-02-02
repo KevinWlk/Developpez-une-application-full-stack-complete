@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
             console.error("Accès interdit ou non autorisé. Redirection vers la connexion...");
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
-            this.router.navigate(['/login']); // Redirige vers la page de connexion
+            this.router.navigate(['/login']);
           }
         }
         return throwError(() => error);

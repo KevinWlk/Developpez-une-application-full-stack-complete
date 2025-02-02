@@ -1,39 +1,61 @@
 <div class="container mx-auto py-6 px-4 max-w-2xl">
-  <!-- Retour -->
-  <button class="text-gray-600 mt-4" (click)="goBack()">
+  <!-- Bouton Retour -->
+  <button class="text-gray-600 flex items-center mb-4" (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
 
-  <!-- Formulaire de création d'un article -->
-  <div class="bg-white shadow-md rounded-lg p-8 mt-6">
+  <!-- Card blanche -->
+  <div class="bg-white shadow-md rounded-lg p-8">
     <h2 class="text-2xl font-bold text-center mb-6">Créer un nouvel article</h2>
 
     <form [formGroup]="postForm" class="space-y-6">
-      <!-- Sélection du thème -->
-      <div class="relative flex items-center">
-        <mat-form-field appearance="outline" class="w-full text-lg">
-          <mat-select formControlName="subjectId" placeholder="Sélectionner un thème" class="h-12">
-            <mat-option *ngFor="let subject of subscribedSubjects" [value]="subject.id">
-              {{ subject.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+
+      <!-- Sélecteur de thème-->
+      <select
+        formControlName="subjectId"
+        class="w-full border-2 border-purple-500 rounded px-3 py-2 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+      >
+        <!-- Choix par défaut, pré-sélectionné -->
+        <option value="" selected disabled>
+          Sélectionner un thème
+        </option>
+        <!-- Liste des sujets -->
+        <option
+          *ngFor="let subject of subscribedSubjects"
+          [value]="subject.id"
+        >
+          {{ subject.name }}
+        </option>
+      </select>
+
+
 
       <!-- Titre de l'article -->
-      <mat-form-field appearance="outline" class="w-full text-lg">
-        <input matInput formControlName="title" placeholder="Titre de l’article" class="h-12"/>
-      </mat-form-field>
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="Titre de l’article"
+        class="w-full border-2 border-purple-500 rounded px-3 py-2 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+      />
 
       <!-- Contenu de l'article -->
-      <mat-form-field appearance="outline" class="w-full text-lg">
-        <textarea matInput formControlName="content" rows="6" placeholder="Contenu de l’article" class=""></textarea>
-      </mat-form-field>
+      <textarea
+        formControlName="content"
+        rows="5"
+        placeholder="Contenu de l’article"
+        class="w-full border-2 border-purple-500 rounded px-3 py-2 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+      ></textarea>
 
-      <!-- Bouton de soumission -->
-      <button mat-raised-button color="primary" class="w-full py-4 text-lg" [disabled]="postForm.invalid" (click)="onSubmit()">
+      <!-- Bouton Créer -->
+      <button
+        type="button"
+        class="w-full rounded bg-purple-600 text-white py-3 font-semibold hover:bg-purple-700 disabled:opacity-50"
+        [disabled]="postForm.invalid"
+        (click)="onSubmit()"
+      >
         Créer
       </button>
+
     </form>
   </div>
 </div>

@@ -3,14 +3,13 @@
     <!-- Logo -->
     <img src="assets/logo_p6.png" alt="MDD Logo" class="w-24" />
 
-    <!-- Menu affiché SEULEMENT SI connecté -->
-    <nav *ngIf="isAuthenticated()" class="ml-auto flex items-center space-x-4">
+    <!-- Menu Principal (Visible en Desktop) -->
+    <nav *ngIf="isAuthenticated() && !isMobile" class="ml-auto flex items-center space-x-4">
       <a mat-button routerLink="/subjects" routerLinkActive="text-blue-500">Thèmes</a>
       <a mat-button routerLink="/posts" routerLinkActive="text-blue-500">Articles</a>
 
       <!-- Icône de profil avec menu déroulant -->
       <div class="relative">
-        <!-- Icône de profil cliquable -->
         <button mat-icon-button (click)="toggleMenu()" class="flex items-center space-x-2">
           <span class="material-symbols-outlined text-3xl align-middle"
                 [class.text-blue-500]="router.url === '/profile'">
@@ -18,12 +17,31 @@
           </span>
         </button>
 
-        <!-- Menu déroulant -->
+        <!-- Menu déroulant Profil/Déconnexion -->
         <div *ngIf="menuOpen" class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg z-10">
           <a routerLink="/profile" (click)="closeMenu()" class="block px-4 py-2 hover:bg-gray-100">Mon profil</a>
           <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-gray-100">Déconnexion</button>
         </div>
       </div>
     </nav>
+
+    <!-- Bouton Menu Burger -->
+    <button *ngIf="isAuthenticated() && isMobile" mat-icon-button (click)="toggleBurgerMenu()">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
   </div>
 </header>
+
+<!-- MENU BURGER SLIDE -->
+<div *ngIf="burgerMenuOpen" class="fixed top-0 right-0 w-64 h-full bg-white shadow-lg transition-transform transform translate-x-0">
+  <button mat-icon-button class="absolute top-4 right-4" (click)="toggleBurgerMenu()">
+    <span class="material-symbols-outlined">close</span>
+  </button>
+
+  <nav class="mt-16 flex flex-col space-y-4 px-6">
+    <a mat-button routerLink="/subjects" (click)="toggleBurgerMenu()">Thèmes</a>
+    <a mat-button routerLink="/posts" (click)="toggleBurgerMenu()">Articles</a>
+    <a mat-button routerLink="/profile" (click)="toggleBurgerMenu()">Mon Profil</a>
+    <button class="mt-4 w-full bg-red-500 text-white py-2 rounded" (click)="logout()">Déconnexion</button>
+  </nav>
+</div>

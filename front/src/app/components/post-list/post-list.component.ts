@@ -6,7 +6,6 @@ import { Subject } from '../../shared/models/subject';
 import { PostService } from '../../shared/services/post.service';
 import { SubscriptionService } from '../../shared/services/subscription.service';
 import { SubjectService } from '../../shared/services/subject.service';
-import { PostCreateComponent } from '../post-create/post-create.component';
 
 @Component({
   selector: 'app-article-list',
@@ -15,9 +14,11 @@ import { PostCreateComponent } from '../post-create/post-create.component';
 })
 export class PostListComponent implements OnInit {
   articles: Post[] = [];
+  expanded: { [key: number]: boolean } = {};
   isLoading: boolean = true;
   subscribedSubjects: Subject[] = [];
   sortOrder: 'asc' | 'desc' = 'desc';
+
 
   constructor(
     private postService: PostService,
@@ -29,6 +30,7 @@ export class PostListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSubscribedSubjects();
+    this.loadArticles();
   }
 
   private loadSubscribedSubjects(): void {
@@ -44,6 +46,10 @@ export class PostListComponent implements OnInit {
         });
       });
     }
+  }
+
+  toggleExpand(postId: number): void {
+    this.expanded[postId] = !this.expanded[postId];
   }
 
   private loadArticles(): void {
@@ -71,21 +77,6 @@ export class PostListComponent implements OnInit {
     this.router.navigate(['/post', postId]);
   }
 
-  openCreateDialog(): void {
-    const dialogRef = this.dialog.open(PostCreateComponent, {
-      width: '500px',
-      data: { subjects: this.subscribedSubjects },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.postService.createPost(result).subscribe((newPost) => {
-          this.articles.push(newPost);
-          this.sortArticles();
-        });
-      }
-    });
-  }
 
   toggleSortOrder(): void {
     this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';

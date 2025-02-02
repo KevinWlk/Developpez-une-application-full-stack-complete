@@ -14,7 +14,6 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    // Convert User to UserResponse
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "email", target = "email")
@@ -22,7 +21,6 @@ public interface UserMapper {
     @Mapping(source = "updatedAt", target = "updated_at")
     UserResponse userToUserResponse(User user);
 
-    // Convert UserRequest to User
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDate.now())")
     @Mapping(target = "updatedAt", expression = "java(java.time.LocalDate.now())")

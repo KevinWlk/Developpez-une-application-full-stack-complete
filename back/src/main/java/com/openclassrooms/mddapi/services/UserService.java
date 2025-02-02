@@ -56,7 +56,7 @@ public class UserService implements UserInterface {
         }
 
         User user = UserMapper.INSTANCE.userRequestToUser(userRequest);
-        user.setPassword(passwordEncoder.encode(userRequest.getPassword())); // Encoder le mot de passe
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
         userRepository.save(user);
 

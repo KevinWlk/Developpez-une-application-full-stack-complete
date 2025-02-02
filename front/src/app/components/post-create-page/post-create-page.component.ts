@@ -26,7 +26,7 @@ export class PostCreatePageComponent implements OnInit {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-      subjectId: [null, Validators.required],
+      subjectId: ['', Validators.required],
     });
 
     this.loadSubscribedSubjects();
@@ -44,29 +44,23 @@ export class PostCreatePageComponent implements OnInit {
     if (userId) {
       this.subscriptionService.getSubscriptionsByUserId(+userId).subscribe((subscriptions) => {
         this.subscribedSubjects = subscriptions.map(sub => ({
-          id: sub.subjectId, // Utilisation de subjectId
-          name: (sub as any).subjectName || 'Inconnu', // Contournement de TypeScript
-          description: '', // Ajout d'une valeur vide pour respecter l'interface
-          createdAt: new Date() // Valeur par défaut pour respecter l'interface
+          id: sub.subjectId,
+          name: (sub as any).subjectName || 'Inconnu',
+          description: '',
+          createdAt: new Date()
         }));
       });
     }
   }
 
   goBack(): void {
-    this.router.navigate(['/posts']); // Redirige vers la liste des articles
-  }
-
-  onInput(event: any): void {
-    if (event.target.value.length > 100) {
-      event.target.value = event.target.value.substring(0, 100);
-    }
+    this.router.navigate(['/posts']);
   }
 
   onSubmit(): void {
     if (this.postForm.valid) {
       this.postService.createPost(this.postForm.value).subscribe(() => {
-        this.router.navigate(['/posts']); // 🔥 Redirection après création
+        this.router.navigate(['/posts']);
       });
     }
   }

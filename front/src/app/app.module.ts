@@ -26,7 +26,6 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PostListComponent } from './components/post-list/post-list.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { PostCreateComponent } from './components/post-create/post-create.component';
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
@@ -44,7 +43,6 @@ import { PostCreatePageComponent } from './components/post-create-page/post-crea
     SubjectListComponent,
     NotFoundComponent,
     PostListComponent,
-    PostCreateComponent,
     PostDetailComponent,
     PostCreatePageComponent
   ],
@@ -68,7 +66,7 @@ import { PostCreatePageComponent } from './components/post-create-page/post-crea
     MatMenuModule,
     MatProgressSpinnerModule
   ],
-  entryComponents: [PostCreateComponent],
+  entryComponents: [PostCreatePageComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
