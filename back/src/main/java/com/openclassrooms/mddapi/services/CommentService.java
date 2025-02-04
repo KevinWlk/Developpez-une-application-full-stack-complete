@@ -18,7 +18,6 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final Logger logger = LoggerFactory.getLogger(CommentService.class);
 
     /**
      * Initialise le service avec le {@link CommentRepository} nécessaire

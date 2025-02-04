@@ -32,6 +32,11 @@ public class CommentDTO {
     private Integer userId;
 
     /**
+     * Nom de l'utilisateur ayant créé le commentaire.
+     */
+    private String userName;
+
+    /**
      * Contenu textuel du commentaire.
      */
     private String content;
