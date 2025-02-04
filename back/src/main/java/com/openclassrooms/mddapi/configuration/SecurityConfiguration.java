@@ -92,6 +92,7 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Filtre JWT
                 .cors(withDefaults()); // Active la configuration CORS
 
+        return http.build();
     }
 
     /**
