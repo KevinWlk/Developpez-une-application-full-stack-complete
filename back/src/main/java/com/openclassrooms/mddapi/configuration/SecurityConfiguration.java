@@ -104,7 +104,6 @@ public class SecurityConfiguration {
      *     <li>Permet l'utilisation des méthodes "GET", "POST", "PUT", "DELETE", "OPTIONS",</li>
      *     <li>Accepte les en-têtes "Authorization" et "Content-Type",</li>
      *     <li>Autorise l'envoi des identifiants (cookies, tokens) via
-     *         {@link CorsConfiguration#setAllowCredentials(boolean)},</li>
      *     <li>Applique cette configuration pour l'ensemble des routes ({@code "/**"}).</li>
      * </ul>
      *
